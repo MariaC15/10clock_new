@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-@objc public  protocol TenClockDelegate {
+@objc public protocol TenClockDelegate {
     //Executed for every touch.
     @objc optional func timesUpdated(_ clock:TenClock, startDate:Date,  endDate:Date  ) -> ()
     //Executed after the user lifts their finger from the control.
     @objc optional func timesChanged(_ clock:TenClock, startDate:Date,  endDate:Date  ) -> ()
 }
-func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
+public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
     let dStepSize = Double(stepSize)
     let dval  = Double(val)
     let nsf = floor(dval/dStepSize)
@@ -26,26 +26,26 @@ func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
 
 //XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 //@IBDesignable
-open class TenClock : UIControl{
+@objcMembers open class TenClock : UIControl{
 
-    open var delegate:TenClockDelegate?
+    @IBInspectable open var delegate:TenClockDelegate?
     //overall inset. Controls all sizes.
     @IBInspectable var insetAmount: CGFloat = 40
     var internalShift: CGFloat = 5;
     var pathWidth:CGFloat = 54
 
-    var timeStepSize: CGFloat = 5
-    let gradientLayer = CAGradientLayer()
-    let trackLayer = CAShapeLayer()
-    let pathLayer = CAShapeLayer()
-    let headLayer = CAShapeLayer()
-    let tailLayer = CAShapeLayer()
-    let topHeadLayer = CAShapeLayer()
-    let topTailLayer = CAShapeLayer()
-    let numeralsLayer = CALayer()
-    let titleTextLayer = CATextLayer()
-    let overallPathLayer = CALayer()
-    let repLayer:CAReplicatorLayer = {
+    @IBInspectable var timeStepSize: CGFloat = 5
+    @IBInspectable let gradientLayer = CAGradientLayer()
+    @IBInspectable let trackLayer = CAShapeLayer()
+    @IBInspectable let pathLayer = CAShapeLayer()
+    @IBInspectable let headLayer = CAShapeLayer()
+    @IBInspectable let tailLayer = CAShapeLayer()
+    @IBInspectable let topHeadLayer = CAShapeLayer()
+    @IBInspectable let topTailLayer = CAShapeLayer()
+    @IBInspectable let numeralsLayer = CALayer()
+    @IBInspectable let titleTextLayer = CATextLayer()
+    @IBInspectable let overallPathLayer = CALayer()
+    @IBInspectable let repLayer:CAReplicatorLayer = {
         var r = CAReplicatorLayer()
         r.instanceCount = 48
         r.instanceTransform =
@@ -56,7 +56,7 @@ open class TenClock : UIControl{
         return r
     }()
 
-    let repLayer2:CAReplicatorLayer = {
+    @IBInspectable let repLayer2:CAReplicatorLayer = {
         var r = CAReplicatorLayer()
         r.instanceCount = 12
         r.instanceTransform =
@@ -94,57 +94,57 @@ open class TenClock : UIControl{
     open var shouldMoveTail = true
     
     
-    open var numeralsColor:UIColor? = UIColor.darkGray
-    open var minorTicksColor:UIColor? = UIColor.lightGray
-    open var majorTicksColor:UIColor? = UIColor.blue
-    open var centerTextColor:UIColor? = UIColor.darkGray
+    @IBInspectable open var numeralsColor:UIColor? = UIColor.darkGray
+    @IBInspectable open var minorTicksColor:UIColor? = UIColor.lightGray
+    @IBInspectable open var majorTicksColor:UIColor? = UIColor.blue
+    @IBInspectable open var centerTextColor:UIColor? = UIColor.darkGray
 
-    open var titleColor = UIColor.lightGray
-    open var titleGradientMask = false
+    @IBInspectable open var titleColor = UIColor.lightGray
+    @IBInspectable open var titleGradientMask = false
 
     //disable scrol on closest superview for duration of a valid touch.
-    var disableSuperviewScroll = false
+    @IBInspectable var disableSuperviewScroll = false
 
-    open var headBackgroundColor = UIColor.white.withAlphaComponent(0.8)
-    open var tailBackgroundColor = UIColor.white.withAlphaComponent(0.8)
+    @IBInspectable open var headBackgroundColor = UIColor.white.withAlphaComponent(0.8)
+    @IBInspectable open var tailBackgroundColor = UIColor.white.withAlphaComponent(0.8)
 
-    open var headText: String = "Start"
-    open var tailText: String = "End"
+    @IBInspectable open var headText: String = "Start"
+    @IBInspectable open var tailText: String = "End"
 
-    open var headTextColor = UIColor.black
-    open var tailTextColor = UIColor.black
+    @IBInspectable open var headTextColor = UIColor.black
+    @IBInspectable open var tailTextColor = UIColor.black
 
-    open var minorTicksEnabled:Bool = true
-    open var majorTicksEnabled:Bool = true
+    @IBInspectable open var minorTicksEnabled:Bool = true
+    @IBInspectable open var majorTicksEnabled:Bool = true
     @objc open var disabled:Bool = false {
         didSet{
         		update()
         }
     }
     
-    open var buttonInset:CGFloat = 2
-    func disabledFormattedColor(_ color:UIColor) -> UIColor{
+    @IBInspectable open var buttonInset:CGFloat = 2
+    @objc open func disabledFormattedColor(_ color:UIColor) -> UIColor{
         return disabled ? color.greyscale : color
     }
 
 
 
 
-    var trackWidth:CGFloat {return pathWidth }
+    @IBInspectable var trackWidth:CGFloat {return pathWidth }
     func proj(_ theta:Angle) -> CGPoint{
         let center = self.layer.center
         return CGPoint(x: center.x + trackRadius * cos(theta) ,
                            y: center.y - trackRadius * sin(theta) )
     }
 
-    var headPoint: CGPoint{
+    @IBInspectable var headPoint: CGPoint{
         return proj(headAngle)
     }
-    var tailPoint: CGPoint{
+    @IBInspectable var tailPoint: CGPoint{
         return proj(tailAngle)
     }
 
-    lazy internal var calendar = Calendar(identifier:Calendar.Identifier.gregorian)
+    @IBInspectable lazy internal var calendar = Calendar(identifier:Calendar.Identifier.gregorian)
     func toDate(_ val:CGFloat)-> Date {
 //        var comps = DateComponents()
 //        comps.minute = Int(val)
@@ -162,28 +162,28 @@ open class TenClock : UIControl{
         set{ headAngle = timeToAngle(newValue) }
     }
 
-    var internalRadius:CGFloat {
+    @IBInspectable  var internalRadius:CGFloat {
         return internalInset.height
     }
-    var inset:CGRect{
+    @IBInspectable var inset:CGRect{
         return self.layer.bounds.insetBy(dx: insetAmount, dy: insetAmount)
     }
-    var internalInset:CGRect{
+    @IBInspectable var internalInset:CGRect{
         let reInsetAmount = trackWidth / 2 + internalShift
         return self.inset.insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    var numeralInset:CGRect{
+    @IBInspectable var numeralInset:CGRect{
         let reInsetAmount = trackWidth / 2 + internalShift + internalShift
         return self.inset.insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    var titleTextInset:CGRect{
+    @IBInspectable var titleTextInset:CGRect{
         let reInsetAmount = trackWidth.checked / 2 + 4 * internalShift
         return (self.inset).insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    var trackRadius:CGFloat { return inset.height / 2}
-    var buttonRadius:CGFloat { return /*44*/ pathWidth / 2 }
-    var iButtonRadius:CGFloat { return /*44*/ buttonRadius - buttonInset }
-    var strokeColor: UIColor {
+    @IBInspectable var trackRadius:CGFloat { return inset.height / 2}
+    @IBInspectable var buttonRadius:CGFloat { return /*44*/ pathWidth / 2 }
+    @IBInspectable var iButtonRadius:CGFloat { return /*44*/ buttonRadius - buttonInset }
+    @IBInspectable var strokeColor: UIColor {
         get {
             return UIColor(cgColor: trackLayer.strokeColor!)
         }
@@ -450,15 +450,15 @@ open class TenClock : UIControl{
     }
 
     /** Contains the minimum value of the receiver. */
-    var minimumValue: Float = 0.0
+    @IBInspectable  var minimumValue: Float = 0.0
 
     /** Contains the maximum value of the receiver. */
-    var maximumValue: Float = 1.0
+    @IBInspectable var maximumValue: Float = 1.0
 
     /** Contains a Boolean value indicating whether changes
      in the sliders value generate continuous update events. */
-    var continuous = true
-    var valueChanged = false
+    @IBInspectable var continuous = true
+    @IBInspectable var valueChanged = false
 
 
     var pointMover:((CGPoint) ->())?
