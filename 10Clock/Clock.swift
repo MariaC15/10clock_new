@@ -151,10 +151,12 @@ open class TenClock : UIControl{
         return calendar.date(byAdding: Calendar.Component.minute , value: Int(val), to: Date().startOfDay as Date)!
 //        return calendar.dateByAddingComponents(comps, toDate: Date().startOfDay as Date, options: .init(rawValue:0))!
     }
+    @IBInspectable
     open var startDate: Date{
         get{return angleToTime(tailAngle) }
         set{ tailAngle = timeToAngle(newValue) }
     }
+    @IBInspectable
     open var endDate: Date{
         get{return angleToTime(headAngle) }
         set{ headAngle = timeToAngle(newValue) }
