@@ -282,15 +282,13 @@ open class TenClock : UIControl{
 
 
     func tlabel(_ str:String, color:UIColor? = nil) -> CATextLayer{
-        let f = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
-        let cgFont = CTFontCreateWithName(f.fontName as CFString?, f.pointSize/2,nil)
+        let f = UIFont.preferredFont(forTextStyle: .caption2)
         let l = CATextLayer()
         l.bounds.size = CGSize(width: 30, height: 15)
         l.fontSize = f.pointSize
         l.foregroundColor =  disabledFormattedColor(color ?? tintColor).cgColor
-        l.alignmentMode = kCAAlignmentCenter
+        l.alignmentMode = CATextLayerAlignmentMode.center
         l.contentsScale = UIScreen.main.scale
-        l.font = cgFont
         l.string = str
 
         return l
@@ -329,8 +327,7 @@ open class TenClock : UIControl{
 
     func updateWatchFaceNumerals() {
         numeralsLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
-        let f = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
-        let cgFont = CTFontCreateWithName(f.fontName as CFString?, f.pointSize/2,nil)
+        let f = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         let startPos = CGPoint(x: numeralsLayer.bounds.midX, y: 15)
         let origin = numeralsLayer.center
         let step = (2 * M_PI) / 12
@@ -338,10 +335,10 @@ open class TenClock : UIControl{
             let l = CATextLayer()
             l.bounds.size = CGSize(width: i > 9 ? 18 : 8, height: 15)
             l.fontSize = f.pointSize
-            l.alignmentMode = kCAAlignmentCenter
+            l.alignmentMode = CATextLayerAlignmentMode.center
             l.contentsScale = UIScreen.main.scale
             //            l.foregroundColor
-            l.font = cgFont
+            
             l.string = "\(i)"
             l.foregroundColor = disabledFormattedColor(numeralsColor ?? tintColor).cgColor
             l.position = CGVector(from:origin, to:startPos).rotate( CGFloat(Double(i) * step)).add(origin.vector).point.checked
@@ -349,15 +346,15 @@ open class TenClock : UIControl{
         }
     }
     func updateWatchFaceTitle(){
-        let f = UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1)
-        let cgFont = CTFontCreateWithName(f.fontName as CFString?, f.pointSize/2,nil)
+        let f = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title1)
+       
 //        let titleTextLayer = CATextLayer()
         titleTextLayer.bounds.size = CGSize( width: titleTextInset.size.width, height: 50)
         titleTextLayer.fontSize = f.pointSize
-        titleTextLayer.alignmentMode = kCAAlignmentCenter
+        titleTextLayer.alignmentMode = CATextLayerAlignmentMode.center
         titleTextLayer.foregroundColor = disabledFormattedColor(centerTextColor ?? tintColor).cgColor
         titleTextLayer.contentsScale = UIScreen.main.scale
-        titleTextLayer.font = cgFont
+        
         //var computedTailAngle = tailAngle //+ (headAngle > tailAngle ? twoPi : 0)
         //computedTailAngle +=  (headAngle > computedTailAngle ? twoPi : 0)
         var fiveMinIncrements = Int( ((tailAngle - headAngle) / twoPi) * 12 /*hrs*/ * 12 /*5min increments*/)
