@@ -43,7 +43,7 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
     @objc @IBInspectable open var topHeadLayer = CAShapeLayer()
     @objc @IBInspectable open var topTailLayer = CAShapeLayer()
     @objc @IBInspectable open var numeralsLayer = CALayer()
-    @objc @IBInspectable open var titleTextLayer = CATextLayer()
+    @objc @IBInspectable open var titleTextayer = CATextLayer()
     @objc @IBInspectable open var overallPathLayer = CALayer()
     @objc @IBInspectable open var repLayer:CAReplicatorLayer = {
         var r = CAReplicatorLayer()
@@ -130,7 +130,7 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
 
 
 
-    @IBInspectable var trackWidth:CGFloat {return pathWidth }
+    @IBInspectable open var trackWidth:CGFloat {return pathWidth }
     func proj(_ theta:Angle) -> CGPoint{
         let center = self.layer.center
         return CGPoint(x: center.x + trackRadius * cos(theta) ,
@@ -180,9 +180,9 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
         let reInsetAmount = trackWidth.checked / 2 + 4 * internalShift
         return (self.inset).insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    @IBInspectable var trackRadius:CGFloat { return inset.height / 2}
-    @IBInspectable var buttonRadius:CGFloat { return /*44*/ pathWidth / 2 }
-    @IBInspectable var iButtonRadius:CGFloat { return /*44*/ buttonRadius - buttonInset }
+    @IBInspectable open  var trackRadius:CGFloat { return inset.height / 2}
+    @IBInspectable open var buttonRadius:CGFloat { return /*44*/ pathWidth / 2 }
+    @IBInspectable open var iButtonRadius:CGFloat { return /*44*/ buttonRadius - buttonInset }
     @IBInspectable open var strokeColor: UIColor {
         get {
             return UIColor(cgColor: trackLayer.strokeColor!)
