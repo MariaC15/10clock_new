@@ -28,24 +28,24 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
 //@IBDesignable
 @objcMembers open class TenClock : UIControl{
 
-    @IBInspectable open var delegate:TenClockDelegate?
+    @objc @IBInspectable open var delegate:TenClockDelegate?
     //overall inset. Controls all sizes.
-    @IBInspectable var insetAmount: CGFloat = 40
-    var internalShift: CGFloat = 5;
-    var pathWidth:CGFloat = 54
+    @objc @IBInspectable open var insetAmount: CGFloat = 40
+    @objc open var internalShift: CGFloat = 5;
+    @objc open var pathWidth:CGFloat = 54
 
-    @IBInspectable var timeStepSize: CGFloat = 5
-    @IBInspectable let gradientLayer = CAGradientLayer()
-    @IBInspectable let trackLayer = CAShapeLayer()
-    @IBInspectable let pathLayer = CAShapeLayer()
-    @IBInspectable let headLayer = CAShapeLayer()
-    @IBInspectable let tailLayer = CAShapeLayer()
-    @IBInspectable let topHeadLayer = CAShapeLayer()
-    @IBInspectable let topTailLayer = CAShapeLayer()
-    @IBInspectable let numeralsLayer = CALayer()
-    @IBInspectable let titleTextLayer = CATextLayer()
-    @IBInspectable let overallPathLayer = CALayer()
-    @IBInspectable let repLayer:CAReplicatorLayer = {
+    @objc @IBInspectable open var timeStepSize: CGFloat = 5
+    @objc @IBInspectable open var gradientLayer = CAGradientLayer()
+    @objc @IBInspectable open var trackLayer = CAShapeLayer()
+    @objc @IBInspectable open var pathLayer = CAShapeLayer()
+    @objc @IBInspectable open var headLayer = CAShapeLayer()
+    @objc @IBInspectable open var tailLayer = CAShapeLayer()
+    @objc @IBInspectable open var topHeadLayer = CAShapeLayer()
+    @objc @IBInspectable open var topTailLayer = CAShapeLayer()
+    @objc @IBInspectable open var numeralsLayer = CALayer()
+    @objc @IBInspectable open var titleTextLayer = CATextLayer()
+    @objc @IBInspectable open var overallPathLayer = CALayer()
+    @objc @IBInspectable open var repLayer:CAReplicatorLayer = {
         var r = CAReplicatorLayer()
         r.instanceCount = 48
         r.instanceTransform =
@@ -56,7 +56,7 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
         return r
     }()
 
-    @IBInspectable let repLayer2:CAReplicatorLayer = {
+    @objc @IBInspectable let repLayer2:CAReplicatorLayer = {
         var r = CAReplicatorLayer()
         r.instanceCount = 12
         r.instanceTransform =
@@ -162,28 +162,28 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
         set{ headAngle = timeToAngle(newValue) }
     }
 
-    @IBInspectable  var internalRadius:CGFloat {
+    @IBInspectable open var internalRadius:CGFloat {
         return internalInset.height
     }
-    @IBInspectable var inset:CGRect{
+    @IBInspectable open var inset:CGRect{
         return self.layer.bounds.insetBy(dx: insetAmount, dy: insetAmount)
     }
-    @IBInspectable var internalInset:CGRect{
+    @IBInspectable open var internalInset:CGRect{
         let reInsetAmount = trackWidth / 2 + internalShift
         return self.inset.insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    @IBInspectable var numeralInset:CGRect{
+    @IBInspectable open var numeralInset:CGRect{
         let reInsetAmount = trackWidth / 2 + internalShift + internalShift
         return self.inset.insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
-    @IBInspectable var titleTextInset:CGRect{
+    @IBInspectable open var titleTextInset:CGRect{
         let reInsetAmount = trackWidth.checked / 2 + 4 * internalShift
         return (self.inset).insetBy(dx: reInsetAmount, dy: reInsetAmount)
     }
     @IBInspectable var trackRadius:CGFloat { return inset.height / 2}
     @IBInspectable var buttonRadius:CGFloat { return /*44*/ pathWidth / 2 }
     @IBInspectable var iButtonRadius:CGFloat { return /*44*/ buttonRadius - buttonInset }
-    @IBInspectable var strokeColor: UIColor {
+    @IBInspectable open var strokeColor: UIColor {
         get {
             return UIColor(cgColor: trackLayer.strokeColor!)
         }
@@ -245,7 +245,7 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
         CATransaction.commit()
 
     }
-    func updateGradientLayer() {
+    open func updateGradientLayer() {
 
         gradientLayer.colors =
             [tintColor,
@@ -256,7 +256,7 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
         gradientLayer.startPoint = CGPoint(x:0,y:0)
     }
 
-    func updateTrackLayerPath() {
+    open func updateTrackLayerPath() {
         let circle = UIBezierPath(
             ovalIn: CGRect(
                 origin:CGPoint(x: 0, y: 00),
@@ -457,8 +457,8 @@ public func medStepFunction(_ val: CGFloat, stepSize:CGFloat) -> CGFloat{
 
     /** Contains a Boolean value indicating whether changes
      in the sliders value generate continuous update events. */
-    @IBInspectable var continuous = true
-    @IBInspectable var valueChanged = false
+    @IBInspectable open var continuous = true
+    @IBInspectable open var valueChanged = false
 
 
     var pointMover:((CGPoint) ->())?
